@@ -1,0 +1,173 @@
+:root {
+  --dp-bg: #ffffff;
+  --dp-border: #e5e7eb;
+  --dp-text: #111827;
+  --dp-muted: #6b7280;
+  --dp-muted-2: #9ca3af;
+  --dp-accent: #4f46e5;
+  --dp-accent-soft: rgba(79, 70, 229, 0.12);
+  --dp-shadow: 0 10px 25px rgba(17, 24, 39, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--dp-text);
+}
+
+/* Each datepicker mounts into a div. Give it spacing + sizing. */
+div[id] > table {
+  width: 100%;
+}
+
+/* Calendar table */
+table {
+  width: 320px;
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--dp-bg);
+  border: 1px solid var(--dp-border);
+  border-radius: 14px;
+  box-shadow: var(--dp-shadow);
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+/* Month + year */
+caption {
+  caption-side: top;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--dp-border);
+}
+
+/* Header rows */
+thead th {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--dp-muted);
+  padding: 0.55rem 0.5rem;
+  text-align: center;
+  user-select: none;
+}
+
+/* Navigation row: left arrow, spacer, right arrow */
+thead tr:first-child th {
+  padding: 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--dp-border);
+}
+
+/* Arrow buttons (your first implementation uses .month-selector) */
+.month-selector {
+  cursor: pointer;
+  color: var(--dp-text);
+  font-size: 1rem;
+  line-height: 1;
+  border-radius: 10px;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.month-selector:hover {
+  background: var(--dp-accent-soft);
+}
+
+.month-selector:active {
+  transform: scale(0.98);
+}
+
+/* Support your second implementation too (data-action buttons) */
+[data-action] {
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background-color 140ms ease, transform 140ms ease;
+}
+
+[data-action]:hover {
+  background: var(--dp-accent-soft);
+}
+
+[data-action]:active {
+  transform: scale(0.98);
+}
+
+/* Day-of-week header row */
+thead tr:last-child th {
+  background: #f9fafb;
+  border-bottom: 1px solid var(--dp-border);
+}
+
+/* Body cells (days) */
+tbody td {
+  width: calc(100% / 7);
+  padding: 0.65rem 0;
+  text-align: center;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--dp-border);
+  border-right: 1px solid var(--dp-border);
+  user-select: none;
+  transition: background-color 140ms ease, color 140ms ease, transform 140ms ease;
+}
+
+/* Remove extra borders on edges */
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+tbody td:last-child {
+  border-right: 0;
+}
+
+/* Hover for selectable days (current month only)
+   - Your first version marks non-month days with .not-in-month
+   - Your second version uses data-current="true" on day cells
+*/
+tbody td:not(.not-in-month):hover,
+[data-role="day"][data-current="true"]:hover {
+  background: var(--dp-accent-soft);
+  color: var(--dp-text);
+  cursor: pointer;
+}
+
+/* Active press */
+tbody td:not(.not-in-month):active,
+[data-role="day"][data-current="true"]:active {
+  transform: scale(0.98);
+}
+
+/* Dimmed days (not in month) */
+.not-in-month,
+[data-role="day"][data-current="false"] {
+  color: var(--dp-muted-2);
+  background: #fafafa;
+}
+
+/* Optional: “today” highlight if you add a class later */
+.today {
+  outline: 2px solid var(--dp-accent);
+  outline-offset: -2px;
+  border-radius: 10px;
+}
+
+/* Optional: selected day highlight if you add a class later */
+.selected {
+  background: var(--dp-accent);
+  color: white;
+}
+
+/* Make two calendars sit nicely if the test page places them side-by-side */
+@media (min-width: 700px) {
+  body {
+    padding: 1rem;
+  }
+
+  /* If the HTML has multiple picker divs in a row, give breathing space */
+  div {
+    margin-right: 1rem;
+  }
+}

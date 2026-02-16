@@ -127,7 +127,7 @@ class DatePicker {
     }
 }
 
-export default class DatePicker {
+    class DatePicker {
     constructor(id, callback) {
         this.id = id;
         this.callback = callback;
