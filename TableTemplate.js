@@ -7,12 +7,10 @@ class TableTemplate {
 
     const data = dict || {};
 
+    // Use TemplateProcessor from previous project
     const replaceTemplates = (text) => {
-      if (typeof text !== 'string') return text;
-      return text.replace(/{{\s*([\w.]+)\s*}}/g, (match, prop) => {
-        const val = data[prop];
-        return (val === undefined || val === null) ? '' : String(val);
-      });
+      const tp = new TemplateProcessor(text);
+      return tp.fillIn(data);
     };
 
     // If table has no rows, just handle visibility and exit
@@ -40,7 +38,7 @@ class TableTemplate {
       return;
     }
 
-    // 3) If columnName exists, find its column index by header cell EXACT match
+    // 3) Find the column index by header cell EXACT match
     let targetColIndex = -1;
     for (let c = 0; c < headerRow.cells.length; c++) {
       if (headerRow.cells[c].textContent === columnName) {
@@ -68,3 +66,5 @@ class TableTemplate {
     if (table.style.visibility === 'hidden') table.style.visibility = 'visible';
   }
 }
+
+globalThis.TableTemplate = TableTemplate;
