@@ -7,6 +7,7 @@ class DatePicker {
     this.currentMonthDate = null; // always the 1st of the displayed month
   }
 
+  
   render(date) {
     if (!(date instanceof Date)) return;
 
