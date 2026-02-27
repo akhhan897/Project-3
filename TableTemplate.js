@@ -67,4 +67,4 @@ class TableTemplate {
   }
 }
 
-globalThis.TableTemplate = TableTemplate;
+window.TableTemplate = TableTemplate;

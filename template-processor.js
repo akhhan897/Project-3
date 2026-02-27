@@ -18,4 +18,4 @@ TemplateProcessor.prototype.fillIn = function fillIn(dictionary) {
     return '';
   });
 };
-globalThis.TemplateProcessor = TemplateProcessor;
+window.TemplateProcessor = TemplateProcessor;

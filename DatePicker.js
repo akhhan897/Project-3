@@ -7,7 +7,6 @@ class DatePicker {
     this.currentMonthDate = null; // always the 1st of the displayed month
   }
 
-
   render(date) {
     if (!(date instanceof Date)) return;
 
@@ -18,25 +17,28 @@ class DatePicker {
       container.removeChild(container.firstChild);
     }
 
-    container.appendChild(this._buildCalendarTable());
+    container.appendChild(this.buildCalendarTable());
   }
 
-  _buildCalendarTable() {
+  buildCalendarTable() {
     const table = document.createElement('table');
-    table.appendChild(this._buildCaption());
-    table.appendChild(this._buildHeader());
-    table.appendChild(this._buildBody());
+    table.appendChild(this.buildCaption());
+    table.appendChild(this.buildHeader());
+    table.appendChild(this.buildBody());
     return table;
   }
 
-  _buildCaption() {
+  buildCaption() {
     const caption = document.createElement('caption');
-    const monthName = this.currentMonthDate.toLocaleString('default', { month: 'long' });
+    const monthName = this.currentMonthDate.toLocaleString(
+      'default',
+      { month: 'long' }
+    );
     caption.textContent = `${monthName} ${this.currentMonthDate.getFullYear()}`;
     return caption;
   }
 
-  _buildHeader() {
+  buildHeader() {
     const thead = document.createElement('thead');
 
     const navRow = document.createElement('tr');
@@ -58,12 +60,20 @@ class DatePicker {
     navRow.appendChild(right);
 
     left.onclick = () => {
-      const d = new Date(this.currentMonthDate.getFullYear(), this.currentMonthDate.getMonth() - 1, 1);
+      const d = new Date(
+        this.currentMonthDate.getFullYear(),
+        this.currentMonthDate.getMonth() - 1,
+        1
+      );
       this.render(d);
     };
 
     right.onclick = () => {
-      const d = new Date(this.currentMonthDate.getFullYear(), this.currentMonthDate.getMonth() + 1, 1);
+      const d = new Date(
+        this.currentMonthDate.getFullYear(),
+        this.currentMonthDate.getMonth() + 1,
+        1
+      );
       this.render(d);
     };
 
@@ -80,7 +90,7 @@ class DatePicker {
     return thead;
   }
 
-  _buildBody() {
+  buildBody() {
     const tbody = document.createElement('tbody');
 
     const year = this.currentMonthDate.getFullYear();
@@ -109,12 +119,16 @@ class DatePicker {
         if (!isCurrentMonth) {
           td.className = 'not-in-month';
         } else {
-          // Only current-month days are clickable and invoke callback
+          // Capture values NOW (cursor changes later)
+          const selectedMonth = cursor.getMonth() + 1;
+          const selectedDay = cursor.getDate();
+          const selectedYear = cursor.getFullYear();
+
           td.onclick = () => {
             this.onDateChanged(this.id, {
-              month: cursor.getMonth() + 1,
-              day: cursor.getDate(),
-              year: cursor.getFullYear(),
+              month: selectedMonth,
+              day: selectedDay,
+              year: selectedYear,
             });
           };
         }
@@ -130,5 +144,4 @@ class DatePicker {
   }
 }
 
-globalThis.DatePicker = DatePicker;
-
+window.DatePicker = DatePicker;
